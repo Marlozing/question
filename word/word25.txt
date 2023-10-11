@@ -1,0 +1,80 @@
+context 
+전후 관계, 맥락, 문맥
+complete 
+완전한, 완벽한, 완료된, 완료하다
+race 
+경주[경쟁]하다, 질주하다, 경주, 경쟁, 인종
+dominate 
+지배하다
+vehicle 
+탈것, 운송 수단
+complain 
+불평하다, 항의하다
+brochure 
+소책자, 브로셔
+force 
+힘, 영향력, 강요하다
+nest 
+둥지, 보금자리, 둥지를 틀다, (둥지에서) 살다
+gain 
+얻다, 이익
+curriculum 
+교육 과정, 커리큘럼
+sew 
+꿰매다, 바느질하다
+masculine 
+남자의, 남자다운
+frown 
+눈살을 찌푸리다, 찡그린 얼굴
+astound 
+놀라게 하다
+dictator 
+독재자, 구술하는 사람
+assessment 
+평가, 판단
+crucial 
+중대한, 결정적인
+paralysis 
+마비
+deck 
+갑판
+cheer 
+환호, 갈채, 환호[성원]하다
+miserable 
+비참한, 불쌍한
+tease 
+괴롭히다, 약올리다
+aggressive 
+공격적인, 적극적인
+cure 
+치료하다, 해결하다, 치유, 회복
+attribute 
+~의 결과로 여기다, 속성
+foster 
+육성하다, 촉진시키다, 수양의, 위탁의
+psychologist 
+심리학자
+postpone 
+연기하다, 뒤로 미루다
+rob 
+훔치다, 강탈하다
+abuse 
+남용, 욕설, 학대, 남용하다, 학대하다
+unemployed 
+실업의, 실직한
+breakdown 
+고장, 쇠약
+disguise 
+변장하다, 숨기다, 변장, 은폐
+blueprint 
+청사진
+rear 
+뒤, 뒤의, 후방의 기르다
+output 
+생산(량), 산출(량)
+sermon 
+설교
+sprout 
+싹이 트다, 자라나다, 싹
+tin 
+양철, 주석
