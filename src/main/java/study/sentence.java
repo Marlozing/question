@@ -1,5 +1,6 @@
 package study;
 
+import kr.bydelta.koala.hnn.SentenceSplitter;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class sentence {
     public static void main(String[] arg) {
-        new sentence(1);
+        new sentence(2);
     }
     public sentence(int i){
         try
@@ -30,36 +31,93 @@ public class sentence {
             SentenceModel model = new SentenceModel(modelIn);                        // 문장 나누기 준비
             SentenceDetectorME sdetector = new SentenceDetectorME(model);
 
-            BufferedReader br = new BufferedReader(new FileReader("./sentence\\sentence" + i +".txt"));     // 문장 파일 얻기
+            BufferedReader enbr = new BufferedReader(new FileReader("./sentence\\mainsentence" + i +".txt"));     // 문장 파일 얻기
             StringBuilder sentencelist = new StringBuilder();
-            for(String str : br.lines().toList()) {
+            for(String str : enbr.lines().toList()) {
                 sentencelist.append(" ").append(str);            // 문장 얻기
             }
 
             String[] sentences = sdetector.sentDetect(sentencelist.toString());      //문장 나누기
             List<String> mixedSentences = new ArrayList<>();
+            String instant_sentence = "";
             for(String str : sentences){
+                str = str.replace(" .", "");
+                if(!instant_sentence.isEmpty()){
+                    str = instant_sentence + " " + str;
+                    instant_sentence = "";
+                }
+                if(str.contains("\"")){
+                    int count = str.length() - str.replace("\"", "").length();
+                    if(count == 1){
+                        instant_sentence = str;
+                        continue;
+                    }
+                }
                 List<String> token = getStrings(str);
                 Collections.shuffle(token);
                 StringBuilder mix = new StringBuilder("(");
                 for(String str2 : token){
-                    if(str2.length()==1){
-                        mix.append(str2).append(" ");
-                    }else{
-                        mix.append(str2).append(" / ");
-                    }
+                    mix.append(str2).append(" / ");
                 }
                 mix.append(")");
                 mix = new StringBuilder(mix.toString().replace("/ )", ")"));
                 mixedSentences.add(mix.toString());
             }
 
-
             HWPFile hwpFile = HWPReader.fromFile("./files\\1.hwp");
             Section s = hwpFile.getBodyText( ).getSectionList( ).get( 0 );
             Paragraph firstParagraph = s.getParagraph( 0 );
-            List<String> translate = Files.readAllLines(Path.of("./translate\\translate" + i +".txt"));   //파일로부터 얻어오기
+            BufferedReader krbr = new BufferedReader(new FileReader("./translate\\maintranslate" + i +".txt"));     //파일로부터 얻어오기
+            StringBuilder translatelist = new StringBuilder();
+            for(String str : krbr.lines().toList()) {
+                translatelist.append(" ").append(str);            // 문장 얻기
+            }
+            instant_sentence = "";
+            List<String> translate = new ArrayList<>();
+            SentenceSplitter splitter = new SentenceSplitter();
+            List<String> translate_sentences = splitter.invoke(String.valueOf(translatelist));
+            for(String str : translate_sentences){
+                str = str.replace(" .", ".");
+                str = str.replace("  ", "");
+                str = str.replace("‘", "'");
+                str = str.replace("’", "'");
+                str = str.replace("“", "\"");
+                str = str.replace("”", "\"");
+                if(!instant_sentence.isEmpty()){
+                    for(String condition : Arrays.asList("'","\"")){
+                        if(instant_sentence.contains(condition)) {
+                            if(str.contains(condition)){
+                                str = instant_sentence + " " + str;
+                                instant_sentence = "";
+                                translate.add(str);
+                            }
+                            else{
+                                instant_sentence = instant_sentence + " " + str;
+                            }
+                        }
+                    }
+                    continue;
+                }
+                if (str.contains("'")) {
+                    int count = str.length() - str.replace("'", "").length();
+                    if (count % 2 == 1) {
+                        instant_sentence = str;
+                        continue;
+                    }
+                }
+                if (str.contains("\"")) {
+                    int count = str.length() - str.replace("\"", "").length();
+                    if (count % 2 == 1) {
+                        instant_sentence = str;
+                        continue;
+                    }
+                }
+                translate.add(str);
+            }
+            System.out.println(translate.size());
+            System.out.println(mixedSentences.size());
             for(i = 0; i < mixedSentences.size(); i++){
+                System.out.println(translate.get(i));
                 firstParagraph.getText().addString(translate.get(i) + "\n");
                 firstParagraph.getText().addString(mixedSentences.get(i)+"\n\n\n\n\n");
             }
