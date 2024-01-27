@@ -10,22 +10,23 @@ import java.util.*;
 import java.util.List;
 
 public class subjective extends JFrame implements KeyListener, ActionListener {
-    public static void main(String[] args) {
-        new subjective("word1");
-    }
 
     private final int width;
     private final int height;
     private HashMap<String,String> word = new HashMap<>();
     private final List<String> krlist = new ArrayList<>();
     private final HashMap<String,String> wrong = new HashMap<>();
+    private final Sound correct;
+    private final Sound incorrect;
     JPanel qlist = new JPanel();
     JLabel q = new JLabel("",JLabel.CENTER);
     JLabel count = new JLabel("",JLabel.CENTER);
     JTextField field = new JTextField("");
-    public subjective(String str) {
+    public subjective(String str, Sound correct, Sound incorrect) {
         this.width = Main.width;
         this.height = Main.height;
+        this.correct = correct;
+        this.incorrect = incorrect;
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         if(!str.equals("reexam")){
@@ -97,7 +98,9 @@ public class subjective extends JFrame implements KeyListener, ActionListener {
         q.setText(encor);
         count.setText(krlist.size() + "/" + word.size() + "   ");
         this.revalidate();
+        field.setText(word.get(encor).charAt(0)+"");
         field.requestFocus();
+        field.setSelectionStart(1);
     }
 
     @Override
@@ -118,8 +121,26 @@ public class subjective extends JFrame implements KeyListener, ActionListener {
                 wrong.put(word.get(krlist.get(0)), krlist.get(0));
                 field.setText(word.get(krlist.get(0)));
                 field.setBackground(new Color(236,55,55));
+                incorrect.play();
+
+                try {
+                    HashMap<String, HashMap<String, String>> wrongword = wrongAnswer.readWrong();
+                    if(wrongword.containsKey(word.get(krlist.get(0)))){
+                        wrongword.get(word.get(krlist.get(0))).put("subjective", String.valueOf(Integer.parseInt(wrongword.get(word.get(krlist.get(0))).get("choice")) + 1));
+                    }else{
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("answer", krlist.get(0));
+                        hashMap.put("choice", "0");
+                        hashMap.put("subjective", "1");
+                        wrongword.put(word.get(krlist.get(0)), hashMap);
+                    }
+                    wrongAnswer.writeWrong(wrongword);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }else{
                 field.setBackground(new Color(6,255,69));
+                correct.play();
             }
             new Thread(() -> {
                 try {
@@ -131,7 +152,7 @@ public class subjective extends JFrame implements KeyListener, ActionListener {
                 krlist.remove(krlist.get(0));
                 field.setText("");
                 if(krlist.isEmpty()){
-                    new wrongbook("주관식 오답들",wrong);
+                    new wrongbook("주관식 오답들",wrong,correct,incorrect);
                     setVisible(false);
                     return;
                 }
@@ -143,7 +164,7 @@ public class subjective extends JFrame implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("quit")) {
-            new wrongbook("주관식 오답들", wrong);
+            new wrongbook("주관식 오답들", wrong, correct, incorrect);
             this.setVisible(false);
         }
     }

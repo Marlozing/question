@@ -11,10 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
+
+
 public class choice extends JFrame implements ActionListener {
-    public static void main(String[] args) {
-        new choice("word1");
-    }
     private int selnumber;
     private final int width;
     private final int height;
@@ -27,9 +26,13 @@ public class choice extends JFrame implements ActionListener {
     JPanel qlist = new JPanel();
     JLabel q = new JLabel("",JLabel.CENTER);
     JLabel count = new JLabel("",JLabel.CENTER);
-    public choice(String str) {
+    private final Sound correct;
+    private final Sound incorrect;
+    public choice(String str, Sound correct, Sound incorrect) {
         this.width = Main.width;
         this.height = Main.height;
+        this.correct = correct;
+        this.incorrect = incorrect;
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         if(!str.equals("reexam")){
@@ -131,7 +134,7 @@ public class choice extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {                               //버튼 클릭 이벤트
         if(e.getActionCommand().equals("quit")){
-            new wrongbook("객관식 오답들",wrong);
+            new wrongbook("객관식 오답들", wrong, correct, incorrect);
             this.setVisible(false);
         }else{
             int command=Integer.parseInt(e.getActionCommand());
@@ -141,6 +144,25 @@ public class choice extends JFrame implements ActionListener {
     public void actionList(int command){                                       //정답 확인
         if(command!=selnumber){
             wrong.put(enlist.get(0), word.get(enlist.get(0)));
+            incorrect.play();
+
+            try {
+                HashMap<String, HashMap<String, String>> wrongword = wrongAnswer.readWrong();
+                if(wrongword.containsKey(enlist.get(0))){
+                    wrongword.get(enlist.get(0)).put("choice", String.valueOf(Integer.parseInt(wrongword.get(enlist.get(0)).get("choice")) + 1));
+                }else{
+                    HashMap<String, String> hashMap = new HashMap();
+                    hashMap.put("answer", word.get(enlist.get(0)));
+                    hashMap.put("choice", "1");
+                    hashMap.put("subjective", "0");
+                    wrongword.put(enlist.get(0), hashMap);
+                }
+                wrongAnswer.writeWrong(wrongword);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            correct.play();
         }
         for (JButton jb : jbs) {
             jb.setBackground(new Color(236,55,55));
@@ -155,7 +177,7 @@ public class choice extends JFrame implements ActionListener {
             }
             enlist.remove(enlist.get(0));
             if(enlist.isEmpty()){
-                new wrongbook("객관식 오답들",wrong);
+                new wrongbook("객관식 오답들",wrong, correct, incorrect);
                 this.setVisible(false);
                 return;
             }

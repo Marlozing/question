@@ -20,9 +20,14 @@ public class wrongbook extends JFrame implements MouseListener,KeyListener,ListS
     private DefaultListModel model;	//JList에 보이는 실제 데이터
     private JScrollPane scrolled;
 
-    public wrongbook(String title,HashMap<String,String> wrong) {
+    private final Sound correct;
+    private final Sound incorrect;
+
+    public wrongbook(String title,HashMap<String,String> wrong, Sound correct, Sound incorrect) {
         super(title);
         init(wrong);
+        this.correct = correct;
+        this.incorrect = incorrect;
     }
 
     public void init(HashMap<String,String> wrong) {
@@ -90,7 +95,7 @@ public class wrongbook extends JFrame implements MouseListener,KeyListener,ListS
                         String[] strs = str.toString().split(":");
                         hashMap.put(strs[0],strs[1]);
                     }
-                    choice q = new choice("reexam");
+                    choice q = new choice("reexam",correct,incorrect);
                     q.ChangeWord(hashMap);
                 }
                 if(getTitle().equals("주관식 오답들")){
@@ -98,7 +103,7 @@ public class wrongbook extends JFrame implements MouseListener,KeyListener,ListS
                         String[] strs = str.toString().split(":");
                         hashMap.put(strs[1],strs[0]);
                     }
-                    subjective q = new subjective("reexam");
+                    subjective q = new subjective("reexam",correct,incorrect);
                     q.ChangeWord(hashMap);
                 }
                 this.setVisible(false);

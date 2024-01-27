@@ -1,0 +1,4 @@
+dental /치아의/0/1
+publish /발표하다, 출판하다/0/1
+occasion /경우, 특별한 일/0/1
+congratulate /축하하다/0/1

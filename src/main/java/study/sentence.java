@@ -13,8 +13,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +20,9 @@ import java.util.List;
 
 public class sentence {
     public static void main(String[] arg) {
-        new sentence(2);
+        for(int i = 1; i <= 9; i++){
+            new sentence(i);
+        }
     }
     public sentence(int i){
         try
@@ -31,7 +31,7 @@ public class sentence {
             SentenceModel model = new SentenceModel(modelIn);                        // 문장 나누기 준비
             SentenceDetectorME sdetector = new SentenceDetectorME(model);
 
-            BufferedReader enbr = new BufferedReader(new FileReader("./sentence\\mainsentence" + i +".txt"));     // 문장 파일 얻기
+            BufferedReader enbr = new BufferedReader(new FileReader("./sentence\\sentence" + i +".txt"));     // 문장 파일 얻기
             StringBuilder sentencelist = new StringBuilder();
             for(String str : enbr.lines().toList()) {
                 sentencelist.append(" ").append(str);            // 문장 얻기
@@ -67,7 +67,7 @@ public class sentence {
             HWPFile hwpFile = HWPReader.fromFile("./files\\1.hwp");
             Section s = hwpFile.getBodyText( ).getSectionList( ).get( 0 );
             Paragraph firstParagraph = s.getParagraph( 0 );
-            BufferedReader krbr = new BufferedReader(new FileReader("./translate\\maintranslate" + i +".txt"));     //파일로부터 얻어오기
+            BufferedReader krbr = new BufferedReader(new FileReader("./translate\\translate" + i +".txt"));     //파일로부터 얻어오기
             StringBuilder translatelist = new StringBuilder();
             for(String str : krbr.lines().toList()) {
                 translatelist.append(" ").append(str);            // 문장 얻기
@@ -116,12 +116,13 @@ public class sentence {
             }
             System.out.println(translate.size());
             System.out.println(mixedSentences.size());
-            for(i = 0; i < mixedSentences.size(); i++){
-                System.out.println(translate.get(i));
-                firstParagraph.getText().addString(translate.get(i) + "\n");
-                firstParagraph.getText().addString(mixedSentences.get(i)+"\n\n\n\n\n");
+            for(int j = 0; j < mixedSentences.size(); j++){
+                System.out.println(translate.get(j));
+                System.out.println(mixedSentences.get(j));
+                firstParagraph.getText().addString(translate.get(j) + "\n");
+                firstParagraph.getText().addString(mixedSentences.get(j)+"\n\n\n\n\n");
             }
-            HWPWriter.toFile(hwpFile, "./files\\2.hwp" );
+            HWPWriter.toFile(hwpFile, "./files\\file-" + i + ".hwp" );
         }
         catch( Exception e ) {
             throw new RuntimeException(e);

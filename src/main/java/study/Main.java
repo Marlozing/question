@@ -7,11 +7,14 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Main extends JFrame implements ActionListener{
     static Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
     static int width = res.width / 2;
     static int height = res.height / 2;
+    static Sound correct;
+    static Sound incorrect;
     JFrame list = new JFrame();
     public static void main(String[] args) {
         new Main();
@@ -37,6 +40,9 @@ public class Main extends JFrame implements ActionListener{
         setLayout(new GridLayout(1,2));
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        correct = new Sound("./sound/correct.wav");
+        incorrect = new Sound("./sound/incorrect.wav");
     }
     @Override
     public void actionPerformed(ActionEvent e){
@@ -85,10 +91,10 @@ public class Main extends JFrame implements ActionListener{
         if(command.contains("word")) {
             list.setVisible(false);
             if (list.getTitle().equals("객관식")) {
-                new choice(command);
+                new choice(command, correct, incorrect);
             }
             if (list.getTitle().equals("주관식")) {
-                new subjective(command);
+                new subjective(command, correct, incorrect);
             }
         }
     }
