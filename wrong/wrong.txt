@@ -1,4 +1,19 @@
+outlook /전망, 조망/1/0
+material /재료, 물질, 물질의/1/0
+peasant /농민, 소작농/2/0
 dental /치아의/0/1
+relationship /관계/1/0
+nominate /(후보자로) 지명[추천]하다, 임명하다/1/0
+research /연구, 연구하다, 조사하다/1/0
+anxiety /걱정, 불안, 열망/1/0
+pavement /보도, 포장도로/1/0
+behalf /이익, 자기편/1/0
 publish /발표하다, 출판하다/0/1
+audience /청중, 관객/2/0
 occasion /경우, 특별한 일/0/1
 congratulate /축하하다/0/1
+recognize /인지하다, 인정하다/1/0
+by-product /부산물/1/0
+infinite /무한한/1/0
+encourage /촉구하다, 격려하다/1/0
+sufficient /충분한/1/0

@@ -157,9 +157,6 @@ public class wrongbook extends JFrame implements MouseListener,KeyListener,ListS
     //ListSelectionListener
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if(!e.getValueIsAdjusting()) {	//이거 없으면 mouse 눌릴때, 뗄때 각각 한번씩 호출되서 총 두번 호출
-            System.out.println("selected :"+list.getSelectedValue());
-        }
     }
 
 }

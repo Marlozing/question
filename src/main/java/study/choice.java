@@ -151,7 +151,7 @@ public class choice extends JFrame implements ActionListener {
                 if(wrongword.containsKey(enlist.get(0))){
                     wrongword.get(enlist.get(0)).put("choice", String.valueOf(Integer.parseInt(wrongword.get(enlist.get(0)).get("choice")) + 1));
                 }else{
-                    HashMap<String, String> hashMap = new HashMap();
+                    HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("answer", word.get(enlist.get(0)));
                     hashMap.put("choice", "1");
                     hashMap.put("subjective", "0");

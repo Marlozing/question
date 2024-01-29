@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class Main extends JFrame implements ActionListener{
     static Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
