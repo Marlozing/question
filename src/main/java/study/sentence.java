@@ -20,9 +20,7 @@ import java.util.List;
 
 public class sentence {
     public static void main(String[] arg) {
-        for(int i = 1; i <= 9; i++){
-            new sentence(i);
-        }
+        new sentence(2) ;
     }
     public sentence(int i){
         try
@@ -120,7 +118,7 @@ public class sentence {
                 System.out.println(translate.get(j));
                 System.out.println(mixedSentences.get(j));
                 firstParagraph.getText().addString(translate.get(j) + "\n");
-                firstParagraph.getText().addString(mixedSentences.get(j)+"\n\n\n\n\n");
+                firstParagraph.getText().addString(mixedSentences.get(j).replace("|", ".")+"\n\n\n\n\n\n\n");
             }
             HWPWriter.toFile(hwpFile, "./files\\file-" + i + ".hwp" );
         }

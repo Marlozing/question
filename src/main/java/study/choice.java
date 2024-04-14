@@ -6,11 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 
 public class choice extends JFrame implements ActionListener {
@@ -19,7 +16,7 @@ public class choice extends JFrame implements ActionListener {
     private final int height;
     private HashMap<String,String> word = new HashMap<>();
     private final List<String> enlist = new ArrayList<>();
-    private final List<String> krlist = new ArrayList<>();
+    private List<String> krlist = new ArrayList<>();
     private final HashMap<String,String> wrong = new HashMap<>();
     JButton[] jbs = new JButton[4];
     JPanel alist = new JPanel();
@@ -92,25 +89,22 @@ public class choice extends JFrame implements ActionListener {
             jbs[i].addActionListener(this);
             alist.add(jbs[i]);
         }
+
         this.add(qlist);this.add(new JLabel(""));this.add(alist);
+
         if(word.isEmpty()){
-            try {
-                List<String> lines = Files.readAllLines(Path.of("./word\\" + str + ".txt"));   //파일로부터 얻어오기
-                for(int i = 1; i < lines.size(); i+=2){
-                    word.put(lines.get(i - 1),lines.get(i));
-                    enlist.add(lines.get(i - 1));
-                    krlist.add(lines.get(i));
-                }
-                Collections.shuffle(enlist);
-                newword(enlist.get(0));
-                this.setVisible(true);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            word = xlsxRead.readWord(Integer.valueOf(str));
+
+            enlist.addAll(word.keySet());
+            krlist = xlsxRead.readKorean();
+            Collections.shuffle(enlist);
+            newword(enlist.get(0));
+
+            this.setVisible(true);
         }else{
             for(String index : word.keySet()){
                 enlist.add(index);
-                krlist.add(word.get(index));
+                krlist = xlsxRead.readKorean();
             }
             Collections.shuffle(enlist);
             newword(enlist.get(0));
@@ -122,7 +116,7 @@ public class choice extends JFrame implements ActionListener {
         answers.remove(word.get(encor));
         Collections.shuffle(answers);
         q.setText(encor);
-        count.setText(enlist.size() + "/" + krlist.size() + "   ");
+        count.setText(enlist.size() + "/" + word.size() + "   ");
         for (int i = 0; i < jbs.length; i++) {
             jbs[i].setBackground(Color.white);
             jbs[i].setText(answers.get(i));

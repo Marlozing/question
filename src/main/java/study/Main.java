@@ -89,8 +89,9 @@ public class Main extends JFrame implements ActionListener{
         }
         if(command.contains("word")) {
             list.setVisible(false);
+            String str = command.replace("word","");
             if (list.getTitle().equals("객관식")) {
-                new choice(command, correct, incorrect);
+                new choice(str, correct, incorrect);
             }
             if (list.getTitle().equals("주관식")) {
                 new subjective(command, correct, incorrect);

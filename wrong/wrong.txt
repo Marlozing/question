@@ -14,6 +14,7 @@ occasion /경우, 특별한 일/0/1
 congratulate /축하하다/0/1
 recognize /인지하다, 인정하다/1/0
 by-product /부산물/1/0
+ability /능력/1/0
 infinite /무한한/1/0
 encourage /촉구하다, 격려하다/1/0
 sufficient /충분한/1/0

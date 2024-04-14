@@ -78,4 +78,3 @@ generate
 일으키다, 발생시키다
 eventually 
 결국
-

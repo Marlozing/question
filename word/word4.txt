@@ -78,4 +78,3 @@ sight
 시야, 광경, 시력
 quantity 
 양(量)
-
