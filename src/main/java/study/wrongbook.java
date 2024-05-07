@@ -1,11 +1,14 @@
 package study;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.HashMap;
-
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 public class wrongbook extends JFrame implements MouseListener,KeyListener,ListSelectionListener{
 
