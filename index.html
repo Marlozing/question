@@ -374,4 +374,36 @@ function bind(){
   $("printBtn").addEventListener("click", () => window.print());
 
   $("sampleBtn").addEventListener("click", () => {
-    $("title").value = "문장 배열 학습지 — Set 
+    $("title").value = "문장 배열 학습지 — Set 1";
+    $("eng").value = SAMPLE_EN;
+    $("kor").value = SAMPLE_KO;
+    render();
+  });
+
+  $("resetBtn").addEventListener("click", () => {
+    SLIDERS.forEach(k => { $(k).value = DEFAULTS[k]; });
+    $("withAnswers").checked = DEFAULTS.withAnswers;
+    render();
+  });
+
+  // txt 파일 불러오기
+  $("engFile").addEventListener("change", e => loadFileInto(e.target, "eng"));
+  $("korFile").addEventListener("change", e => loadFileInto(e.target, "kor"));
+}
+
+function loadFileInto(input, targetId){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => { $(targetId).value = reader.result; render(); };
+  reader.readAsText(file, "UTF-8");
+  input.value = "";   // 같은 파일 다시 선택 가능하도록 초기화
+}
+
+/* ---------------- 시작 ---------------- */
+applyState(load());
+bind();
+render();
+</script>
+</body>
+</html>
